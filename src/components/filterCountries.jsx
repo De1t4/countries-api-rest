@@ -1,0 +1,20 @@
+import React from 'react'
+
+export default function filterCountries({onSelect}) {
+const selectHendler = (e) =>{
+    const regionName = e.target.value
+    onSelect(regionName)
+}
+  return (
+    <div className="select-filter">
+        <select className="filter" onChange={selectHendler}>
+            <option value="none" selected hidden>Filter by Region</option>
+            <option value="Africa">Africa</option>
+            <option value="America">America</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="Oceania">Oceania</option>
+        </select>
+    </div>
+  )
+}
