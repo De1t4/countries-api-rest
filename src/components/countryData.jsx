@@ -28,8 +28,8 @@ export default function CountryData() {
         country.map(info => {
             return (
             <div className="content-info-country" key={info.name.common}>
-                <div className="content-image-country-complete">
-                <img src={info.flags.png} alt={info.flags.alt} className="image-country" />
+                <div className="content-image-country">
+                  <img src={info.flags.png} alt={info.flags.alt} className="image-country" />
                 </div>
                 <div className="content-country-data-general">
                 <div className="country-data-complete">
