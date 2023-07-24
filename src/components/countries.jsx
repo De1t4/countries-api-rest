@@ -49,7 +49,6 @@ export default function Countries() {
       console.error("Error al obtener el país:", error);
     }
   }
-  
   return (
     <div>
       <Navbar></Navbar>

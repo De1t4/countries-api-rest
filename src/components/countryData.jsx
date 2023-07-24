@@ -18,14 +18,27 @@ export default function CountryData() {
   
       obtenerDatos();
     }, [ccn3]);
+    
+    const countryBorder = async (value) => {
+      try {
+        const data = await fetch(`https://restcountries.com/v3.1/alpha?codes=${value}`);
+        const users = await data.json();
+        setCountry(users);
+      } catch (error) {
+        console.log("Error al obtener los datos:", error);
+      }
+    };
+    const obtenerBorder = (e) =>{
+      countryBorder(e.target.textContent)
+    }
 
+    
   return (
    <div>
       <Navbar>
       </Navbar>
       <Link to="/"><button className="btn-back"><i className="fa-solid fa-arrow-left"></i>Back</button></Link>
-        {
-        country.map(info => {
+        {country.map(info => {
             return (
             <div className="content-info-country" key={info.name.common}>
                 <div className="content-image-country">
@@ -67,7 +80,7 @@ export default function CountryData() {
                         <p className="title-border-countries">Border Countries:</p>
                         <div className="country-border">
                             {info.borders.map((border, index) => (
-                            <span key={index}>{border}</span>
+                            <span key={index} onClick={obtenerBorder} className='border'>{border}</span>
                             ))}
                         </div>
                     </div>
