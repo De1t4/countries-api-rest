@@ -102,8 +102,7 @@ main{
 .content-card-country{
     display: grid;
     padding: 20px 75px;
-    grid-template-columns: repeat(4, 23%);
-    grid-template-rows: repeat(auto);
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 30px;
     max-width: 80rem;
     margin-inline: auto;
@@ -263,18 +262,6 @@ main{
 }
   
 
-
-@media screen and (max-width:1300px) {
-    .content-card-country{
-        grid-template-columns: repeat(3, 300px);
-    }
-}
-
-@media screen and (max-width:1050px) {
-    .content-card-country{
-        grid-template-columns: repeat(2, 300px);
-    }
-}
 
 @media screen and (max-width:768px) {
     .content-navbar{
