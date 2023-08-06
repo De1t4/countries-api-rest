@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react'
 import SearchCountry from '../components/searchCountry'
 import FilterCountry from '../components/filterCountries'
 import Navbar from '../components/navbar'
-import CountryData from './props';
+import {CountryData} from './props';
 
 export default function Countries() {
   const [country, setCountry] = useState([]);
   const [countryFound, setCountryFound] = useState(true);
+
+  const API = "https://restcountries.com/v3.1"
 
   useEffect(() => {
     obtenerDatos();
@@ -14,7 +16,7 @@ export default function Countries() {
 
   const obtenerDatos = async () => {
     try {
-      const data = await fetch("https://restcountries.com/v3.1/all");
+      const data = await fetch(`${API}/all`);
       const countries = await data.json();
       setCountry(countries);
     } catch (error) {
@@ -24,10 +26,21 @@ export default function Countries() {
 
   const getCountryName = async (countryName) => {
     try {
-      const data = await fetch(`https://restcountries.com/v3.1/name/${countryName}`);
-      const countries = await data.json();
-
-      if (data.status === 404) {
+      let endpoint = "";
+      if (countryName === "") {
+        endpoint = "/all";
+      } else {
+        endpoint = `/name/${countryName}`;
+      }
+  
+      const response = await fetch(`${API}${endpoint}`);
+      if (!response.ok) {
+        throw new Error("No se pudo obtener la información del país.");
+      }
+  
+      const countries = await response.json();
+  
+      if (countryName !== "" && countries.length === 0) {
         setCountryFound(false);
       } else {
         setCountryFound(true);
@@ -41,7 +54,7 @@ export default function Countries() {
 
   const getCountryByRegion =  async(regionName) =>{
     try{
-      const data = await fetch(`https://restcountries.com/v3.1/region/${regionName}`)
+      const data = await fetch(`${API}/region/${regionName}`)
       const countries = await data.json()
       setCountry(countries)
     } catch(error){
@@ -58,9 +71,9 @@ export default function Countries() {
         <FilterCountry onSelect={getCountryByRegion}></FilterCountry>
       </div>
       <div className="content-card-country" id="content-card-country">
-        {country.map((datos)=>{
+        {country.map((datos, index)=>{
           return(
-            <CountryData name={datos.name.common} ccn3={datos.ccn3} population={datos.population} region={datos.region} capital={datos.capital} img={datos.flags.png}></CountryData>
+            <CountryData key={index} name={datos.name.common} ccn3={datos.ccn3} population={datos.population} region={datos.region} capital={datos.capital} img={datos.flags.png}></CountryData>
           )
         })
         }
