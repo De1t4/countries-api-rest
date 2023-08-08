@@ -1,12 +1,18 @@
 import React from 'react'
+import { useDarkMode } from './DarkModeContext'
 
-export default function filterCountries({onSelect}) {
-const selectHendler = (e) =>{
-    const regionName = e.target.value
-    onSelect(regionName)
-}
+export default function FilterCountries({onSelect}) {
+
+  const {darkMode} = useDarkMode()
+
+
+  const selectHendler = (e) =>{
+      const regionName = e.target.value
+      onSelect(regionName)
+  }
+
   return (
-    <div className="select-filter">
+    <div className={`select-filter ${darkMode ? "select-filter-dark": ""}`}>
         <select className="filter" onChange={selectHendler}>
             <option defaultValue="none" selected hidden>Filter by Region</option>
             <option defaultValue="Africa">Africa</option>
