@@ -1,43 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import Navbar from './navbar'
-import { SingleCountry } from './props';
-import { useDarkMode } from './DarkModeContext';
+import { Link } from 'react-router-dom'
+import { SingleCountry } from '../components/props';
+import { useDarkMode } from '../components/DarkModeContext';
+import UseFetchCountry from '../hooks/useFetchCountry';
 
-export default function CountryData() {
-    const [country, setCountry] = useState([]);
-    const { ccn3 } = useParams();
-    const {darkMode} = useDarkMode()
-
-    useEffect(() => {
-      
-    const obtenerDatos = async () => {
-      try {
-        const data = await fetch(`https://restcountries.com/v3.1/alpha?codes=${ccn3}`);
-        const users = await data.json();
-        setCountry(users);
-      } catch (error) {
-        console.log("Error al obtener los datos:", error);
-      }
-    };
-  
-      obtenerDatos();
-    }, [ccn3]);
-    
-    const countryBorder = async (value) => {
-      try {
-        const data = await fetch(`https://restcountries.com/v3.1/alpha?codes=${value}`);
-        const users = await data.json();
-        setCountry(users);
-      } catch (error) {
-        console.log("Error al obtener los datos:", error);
-      }
-    };
+export default function CountryUnique() {
+  const {darkMode} = useDarkMode()
+  const {country, countryBorder} = UseFetchCountry()
 
   return (
     <>
-      <Navbar>
-      </Navbar>
       <Link to="/"><button className={`btn-back ${darkMode? "btn-back-dark": ""}`}><i class="fa-solid fa-arrow-left" style={darkMode? {color: "#fff"}:{color: "#000000"}}></i>Back</button></Link>
         {country.map((info, index) => {
             return (

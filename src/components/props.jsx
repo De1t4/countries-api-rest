@@ -6,7 +6,6 @@ export function CountryData (props) {
 
   const {darkMode} = useDarkMode()
 
-
   return (
     <Link to={props.ccn3} className={`card-country ${darkMode ? "card-country-dark": ""}`} key={props.ccn3}>
       <div className="content-image-country">
